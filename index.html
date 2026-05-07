@@ -27,8 +27,8 @@
     --dcdd-accent-deep: #5014BA;   /* Loomi purple — for depth */
     --dcdd-light: #F6F4F0;         /* warm off-white sections */
     --dcdd-light-elev: #ECE8E0;
-    --page-pad: clamp(20px, 4vw, 80px);
-    --section-gap: clamp(60px, 8vw, 120px);
+    --page-pad: clamp(18px, 4vw, 80px);
+    --section-gap: clamp(56px, 8vw, 120px);
   }
 
   * { box-sizing: border-box; }
@@ -132,10 +132,35 @@
   .nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 50;
     display: flex; align-items: center; justify-content: space-between;
-    padding: 22px var(--page-pad);
+    padding: 18px var(--page-pad);
     transition: background 250ms ease, border-color 250ms ease, backdrop-filter 250ms ease;
     border-bottom: 1px solid transparent;
   }
+  @media (min-width: 901px) { .nav__burger { display: none; } }
+  .nav__burger {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 44px; height: 44px; border-radius: 999px;
+    background: rgba(255,255,255,0.06); border: 1px solid var(--dcdd-line-strong);
+    color: var(--dcdd-fg);
+  }
+  .nav__burger svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 1.6; }
+  .nav__drawer {
+    position: fixed; inset: 0; z-index: 70;
+    background: rgba(10,7,16,0.96); backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    display: flex; flex-direction: column;
+    padding: 22px var(--page-pad) 32px;
+    transform: translateY(-100%); transition: transform 320ms cubic-bezier(0.22,1,0.36,1);
+  }
+  .nav__drawer.is-open { transform: translateY(0); }
+  .nav__drawer-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px; }
+  .nav__drawer-links { display: flex; flex-direction: column; gap: 4px; }
+  .nav__drawer-link {
+    padding: 18px 0; border-bottom: 1px solid var(--dcdd-line);
+    font-size: 22px; font-weight: 200; letter-spacing: -0.025em;
+    color: var(--dcdd-fg);
+  }
+  .nav__drawer-cta { margin-top: 32px; }
   .nav--scrolled {
     background: rgba(10, 7, 16, 0.78);
     backdrop-filter: blur(18px);
@@ -158,13 +183,19 @@
     transition: opacity 200ms ease;
   }
   .nav__link:hover { opacity: 1; }
-  @media (max-width: 900px) { .nav__links .nav__link { display: none; } }
+  @media (max-width: 900px) {
+    .nav__links .nav__link { display: none; }
+    .nav__links { display: none; }
+  }
 
   /* ---------- HERO ---------- */
   .hero {
     position: relative; min-height: 100vh; min-height: 100svh;
     display: flex; align-items: center; padding: 140px var(--page-pad) 120px;
     overflow: hidden;
+  }
+  @media (max-width: 700px) {
+    .hero { padding: 110px var(--page-pad) 72px; min-height: auto; }
   }
   .hero__atmosphere {
     position: absolute; inset: 0; pointer-events: none; z-index: 0;
@@ -210,12 +241,15 @@
   }
   .hero__pillars {
     display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
-    padding: 32px;
+    padding: 28px;
     background: rgba(255,255,255,0.025);
     border: 1px solid var(--dcdd-line);
     border-radius: 20px;
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
+  }
+  @media (max-width: 480px) {
+    .hero__pillars { grid-template-columns: 1fr; padding: 22px; gap: 18px; }
   }
   .hero__pillar {
     display: flex; flex-direction: column; gap: 8px;
@@ -240,6 +274,10 @@
     font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase;
     color: var(--dcdd-fg-muted); font-weight: 400;
   }
+  @media (max-width: 700px) {
+    .hero__bottom { display: none; }
+    .hero__ctas .btn { flex: 1 1 100%; justify-content: center; }
+  }
 
   /* ---------- PROBLEM SECTION ---------- */
   .problem__head { display: grid; grid-template-columns: 1fr 1.2fr; gap: 64px; margin-bottom: 64px; align-items: end; }
@@ -254,9 +292,13 @@
   @media (max-width: 600px) { .problem__grid { grid-template-columns: 1fr; } }
   .problem__cell {
     background: var(--dcdd-bg);
-    padding: 36px 32px; min-height: 200px;
+    padding: 32px 28px; min-height: 180px;
     display: flex; flex-direction: column; justify-content: space-between;
+    gap: 20px;
     transition: background 250ms ease;
+  }
+  @media (max-width: 600px) {
+    .problem__cell { padding: 24px 22px; min-height: 0; }
   }
   .problem__cell:hover { background: #100C1A; }
   .problem__cell .num {
@@ -279,6 +321,9 @@
     padding: 28px 0; border-bottom: 1px solid rgba(20,16,30,0.10);
     align-items: baseline;
   }
+  @media (max-width: 600px) {
+    .opp__item { grid-template-columns: 1fr; gap: 8px; padding: 22px 0; }
+  }
   .opp__item:last-child { border-bottom: none; }
   .opp__item .num {
     font-size: 13px; letter-spacing: 0.22em; text-transform: uppercase;
@@ -292,16 +337,16 @@
 
   /* ---------- SOLUTION ---------- */
   .sol__quote {
-    margin-top: 64px;
+    margin-top: 56px;
     padding: 56px 64px;
     border: 1px solid var(--dcdd-line);
     border-radius: 24px;
     background: linear-gradient(180deg, rgba(193,58,255,0.06), rgba(80,20,186,0.04));
-    font-weight: 200; font-size: clamp(24px, 2.6vw, 36px);
-    line-height: 1.25; letter-spacing: -0.025em;
+    font-weight: 200; font-size: clamp(22px, 2.6vw, 36px);
+    line-height: 1.3; letter-spacing: -0.025em;
     max-width: 1000px;
   }
-  @media (max-width: 700px) { .sol__quote { padding: 36px 28px; } }
+  @media (max-width: 700px) { .sol__quote { padding: 32px 24px; margin-top: 40px; } }
   .sol__pillars {
     margin-top: 64px;
     display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px;
@@ -331,14 +376,20 @@
   }
   @media (max-width: 1080px) { .svc__grid { grid-template-columns: 1fr 1fr; } }
   @media (max-width: 700px) { .svc__grid { grid-template-columns: 1fr; } }
+  .svc__card--cta { grid-column: span 2; }
+  @media (max-width: 1080px) { .svc__card--cta { grid-column: span 2; } }
+  @media (max-width: 700px) { .svc__card--cta { grid-column: span 1; } }
   .svc__card {
-    padding: 36px 32px;
+    padding: 32px 28px;
     border: 1px solid rgba(20,16,30,0.10);
     border-radius: 20px;
     background: #FFFFFF;
-    display: flex; flex-direction: column; gap: 16px;
+    display: flex; flex-direction: column; gap: 14px;
     transition: border-color 220ms ease, transform 220ms ease, box-shadow 220ms ease;
-    min-height: 280px;
+    min-height: 260px;
+  }
+  @media (max-width: 700px) {
+    .svc__card { min-height: 0; padding: 26px 22px; }
   }
   .svc__card:hover {
     border-color: rgba(20,16,30,0.30);
@@ -555,7 +606,7 @@
     border-radius: 24px;
     padding: 48px;
   }
-  @media (max-width: 700px) { .form-card { padding: 28px; } }
+  @media (max-width: 700px) { .form-card { padding: 24px 20px; border-radius: 18px; } }
   .form-grid {
     display: grid; grid-template-columns: 1fr 1fr; gap: 18px;
   }
@@ -673,7 +724,7 @@
 
   /* ---------- WHATSAPP FLOAT ---------- */
   .wa {
-    position: fixed; right: 22px; bottom: 22px; z-index: 60;
+    position: fixed; right: 18px; bottom: 18px; z-index: 60;
     display: inline-flex; align-items: center; gap: 10px;
     padding: 14px 22px 14px 16px; border-radius: 999px;
     background: #25D366; color: #FFFFFF;
@@ -684,8 +735,48 @@
   .wa:hover { transform: translateY(-2px); box-shadow: 0 18px 40px rgba(37,211,102,0.45), 0 0 0 6px rgba(37,211,102,0.14); }
   .wa svg { width: 22px; height: 22px; fill: currentColor; }
   @media (max-width: 600px) {
-    .wa { padding: 14px; }
+    .wa { padding: 12px; right: 14px; bottom: 14px; }
     .wa span { display: none; }
+  }
+  /* Mobile fine-tuning across all sections */
+  @media (max-width: 700px) {
+    body { font-size: 15px; }
+    .h-display { font-size: clamp(34px, 9vw, 48px); line-height: 1.05; }
+    .h-section { font-size: clamp(28px, 7.5vw, 40px); line-height: 1.12; }
+    .hero__title { font-size: clamp(34px, 9vw, 52px); line-height: 1.05; max-width: 100%; }
+    .hero__sub { font-size: 15px; margin-top: 22px; }
+    .hero__ctas { gap: 10px; margin-top: 32px; }
+    .btn { padding: 14px 22px; font-size: 13px; }
+    .eyebrow { font-size: 11px; letter-spacing: 0.20em; }
+    .eyebrow::before { width: 18px; }
+    .lead { font-size: 15px; }
+    .footer__big { font-size: clamp(48px, 16vw, 88px); }
+    .footer__tag { font-size: 14px; }
+    .footer__bottom { font-size: 10px; gap: 16px; }
+    .footer__links { gap: 18px; }
+    .auth__visual { padding: 28px; min-height: 320px; }
+    .auth__big { font-size: clamp(56px, 16vw, 96px); }
+    .form-radio { flex-direction: column; gap: 8px; }
+    .form-submit { width: 100%; justify-content: center; padding: 16px 24px; }
+    .cta-final__btns { flex-direction: column; align-items: stretch; }
+    .cta-final__btns .btn { justify-content: center; }
+    .how__step { padding: 24px 0; }
+    .how__step .num { width: 36px; height: 36px; margin-bottom: 16px; }
+    .nav__brand b { font-size: 16px; }
+    .nav__brand small { font-size: 9px; letter-spacing: 0.24em; }
+    .ai__quote { font-size: clamp(24px, 7vw, 36px); }
+    .sol__pillars { margin-top: 40px; gap: 12px; }
+    .sol__pillar { padding: 20px; }
+    .diff__cell { padding: 24px 20px; min-height: 0; }
+    .diff__cell p { font-size: 15px; }
+    .opp__item h4 { font-size: 17px; }
+    .opp__item p { font-size: 14px; }
+    .privacy-note { font-size: 11px; }
+  }
+  @media (max-width: 380px) {
+    :root { --page-pad: 16px; }
+    .hero__pillar b { font-size: 19px; }
+    .form-card { padding: 22px 18px; }
   }
 
   /* Reveal on scroll */
@@ -713,7 +804,34 @@
       <span class="btn btn--outline" style="padding: 10px 18px; font-size: 12px;">Falar com a DCDD</span>
     </a>
   </div>
+  <button class="nav__burger" id="nav-burger" aria-label="Abrir menu" aria-expanded="false">
+    <svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+  </button>
 </nav>
+
+<div class="nav__drawer" id="nav-drawer" aria-hidden="true">
+  <div class="nav__drawer-top">
+    <a href="#top" class="nav__brand" data-drawer-close>
+      <b>DCDD <span style="color: var(--dcdd-accent);">Soluções</span></b>
+      <small>Licitações · Contratos · Compras Públicas</small>
+    </a>
+    <button class="nav__burger" id="nav-close" aria-label="Fechar menu">
+      <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+  </div>
+  <div class="nav__drawer-links">
+    <a class="nav__drawer-link" href="#problema" data-drawer-close>Cenário</a>
+    <a class="nav__drawer-link" href="#oportunidade" data-drawer-close>Oportunidade</a>
+    <a class="nav__drawer-link" href="#servicos" data-drawer-close>Serviços</a>
+    <a class="nav__drawer-link" href="#ia" data-drawer-close>Tecnologia · IA</a>
+    <a class="nav__drawer-link" href="#diferenciais" data-drawer-close>Diferenciais</a>
+    <a class="nav__drawer-link" href="#processo" data-drawer-close>Como funciona</a>
+    <a class="nav__drawer-link" href="#autoridade" data-drawer-close>Autoridade</a>
+  </div>
+  <a href="#contato" class="btn btn--primary nav__drawer-cta" data-drawer-close>
+    Falar com a DCDD <span class="arrow">→</span>
+  </a>
+</div>
 
 <!-- ============================ HERO ============================ -->
 <section class="hero" id="top" data-screen-label="01 Hero">
@@ -947,7 +1065,7 @@
         <p>Acompanhamento de obrigações, prazos, documentos, medições, aditivos, reajustes, notificações e riscos durante a execução contratual.</p>
       </div>
 
-      <a href="#contato" class="svc__card" style="grid-column: span 2; background: #14101E; color: #F4F2F7; text-decoration: none; border: 1px solid #14101E;">
+      <a href="#contato" class="svc__card svc__card--cta" style="background: #14101E; color: #F4F2F7; text-decoration: none; border: 1px solid #14101E;">
         <div class="svc__icon" style="background: var(--dcdd-accent); color: #FFFFFF;">
           <svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
         </div>
@@ -1195,7 +1313,7 @@
       <div class="footer__links">
         <span>Política de privacidade</span>
         <span>Termos de uso</span>
-        <span>contato@dcdd.adv.br</span>
+        <span><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="52313d3c2633263d12363136367c3336247c3020">[email&#160;protected]</a></span>
       </div>
     </div>
   </div>
@@ -1209,7 +1327,7 @@
   <span>Falar pelo WhatsApp</span>
 </a>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   // Nav scroll-state
   (function () {
     const nav = document.getElementById('nav');
@@ -1220,6 +1338,20 @@
     };
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
+  })();
+
+  // Mobile drawer
+  (function () {
+    const drawer = document.getElementById('nav-drawer');
+    const burger = document.getElementById('nav-burger');
+    const close = document.getElementById('nav-close');
+    if (!drawer || !burger) return;
+    const open = () => { drawer.classList.add('is-open'); burger.setAttribute('aria-expanded','true'); document.body.style.overflow = 'hidden'; };
+    const shut = () => { drawer.classList.remove('is-open'); burger.setAttribute('aria-expanded','false'); document.body.style.overflow = ''; };
+    burger.addEventListener('click', open);
+    if (close) close.addEventListener('click', shut);
+    drawer.querySelectorAll('[data-drawer-close]').forEach(el => el.addEventListener('click', shut));
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') shut(); });
   })();
 
   // Reveal on scroll
